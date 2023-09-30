@@ -1,16 +1,33 @@
 import { InputAdornment, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const [currentSearchType, setCurrentSearchType] = useState("title");
 
+    const handleClickSearch = () =>{
+        switch (currentSearchType) {
+            case "content":
+                navigate("/van-ban?search=" + searchTerm)
+                break;
+            case "title":
+                break;
+            default:
+                break;
+        }
+    }
+
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
+        if (event.key === "Enter" || event.type === "click") {
+            handleClickSearch();
+        }
     };
 
-    const handleClick = (type) => {
+    const handleChangeType = (type) => {
         setCurrentSearchType(type);
     }
 
@@ -28,20 +45,20 @@ const SearchBar = () => {
                             color: "#fff",
                         },
                     }}
-                    onClick={() => handleClick("title")}
+                    onClick={() => handleChangeType("title")}
                 >Tìm kiếm theo tiêu đề hồ sơ</Button>
                 <Button
                     sx={{
                         fontSize: "10px",
                         background: `${currentSearchType === "content" ? "#1876d2" : "#ccc"}`,
-                        color: "#fff",  
+                        color: "#fff",
                         borderRadius: "0px",
                         "&:hover": {
                             background: "#000",
                             color: "#fff",
                         },
                     }}
-                    onClick={() => handleClick("content")}
+                    onClick={() => handleChangeType("content")}
                 >Tìm kiếm theo nội dung văn bản</Button>
             </div>
             <TextField
@@ -50,10 +67,11 @@ const SearchBar = () => {
                 placeholder="Nhập từ khoá"
                 value={searchTerm}
                 onChange={handleChange}
+                onKeyDown={handleChange}
                 sx={{
                     width: 600,
                     marginTop: "10px",
-                   
+
                 }}
                 InputProps={{
                     style: {
@@ -61,7 +79,9 @@ const SearchBar = () => {
                         background: "#fff",
                     },
                     endAdornment: (
-                        <InputAdornment position="end">
+                        <InputAdornment position="end" onClick={handleClickSearch} sx={{
+                            cursor: "pointer"
+                        }}>
                             <SearchIcon />
                         </InputAdornment>
                     ),
