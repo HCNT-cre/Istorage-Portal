@@ -1,8 +1,13 @@
 import { AppBar, IconButton, Toolbar, Stack, Button, Typography } from "@mui/material"
 import Navbar from "./Navbar"
 import QuocHuy from "src/assets/images/QuocHuy.png"
+import { useNavigate } from "react-router-dom"
 
 const Bar = () => {
+    const navigate = useNavigate()
+    const handleClickLogo = () => {
+        useNavigate("/")
+    }
     return (
         <Toolbar
             sx={{
@@ -11,7 +16,9 @@ const Bar = () => {
                 alignItems: "center",
             }}
         >
-            <div className="flex justify-left items-center">
+            <div className="flex justify-left items-center" 
+                onAbort={handleClickLogo}
+            >
                 <IconButton size="large" aria-label="logo">
                     <img src={QuocHuy} alt="QuocHuy" style={{ width: 50, height: 50 }} />
                 </IconButton>
