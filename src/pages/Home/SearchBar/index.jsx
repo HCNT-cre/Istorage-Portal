@@ -47,10 +47,9 @@ const SearchBar = () => {
             <TextField
                 id="search"
                 type="search"
-                label="Nhập từ khoá"
+                placeholder="Nhập từ khoá"
                 value={searchTerm}
                 onChange={handleChange}
-                InputLabelProps={{ shrink: false }}
                 sx={{
                     width: 600,
                     marginTop: "10px",
