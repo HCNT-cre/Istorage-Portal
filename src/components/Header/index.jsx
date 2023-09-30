@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 const Bar = () => {
     const navigate = useNavigate()
     const handleClickLogo = () => {
-        useNavigate("/")
+        navigate("/")
     }
     return (
         <Toolbar
@@ -17,7 +17,7 @@ const Bar = () => {
             }}
         >
             <div className="flex justify-left items-center" 
-                onAbort={handleClickLogo}
+                onClick={handleClickLogo}
             >
                 <IconButton size="large" aria-label="logo">
                     <img src={QuocHuy} alt="QuocHuy" style={{ width: 50, height: 50 }} />
