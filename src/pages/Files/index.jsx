@@ -1,17 +1,19 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Spin } from "antd";
 import { FaSearch } from "react-icons/fa";
 import "./searchbar.css";
 import axiosHttpService from "src/utils/httpService";
-import { useSelector } from "react-redux";;
+import { useLocation, useNavigate } from "react-router-dom";
+;
 
 const API_SEARCH = import.meta.env.VITE_API_SEARCH;
 const API_GOV_FILE_GET = import.meta.env.VITE_API_GOV_FILE_GET
 
 const Files = () => {
-	const [stateDoc, setStateDoc] = useState(false)
-	const [idDOc, setIdDoc] = useState(null)
-	const [govFileId, setGovFileId] = useState(null)
+	const navigate = useNavigate();
+	const location = useLocation();
+	const searchQuery = new URLSearchParams(location.search).get('search');
+	const [searchTerm, setSearchTerm] = useState(searchQuery);
 	const refInput = useRef();
 	const [searching, setSearching] = useState(false);
 	const [completeGetAPI, setCompleteGetAPI] = useState(false);
@@ -19,8 +21,8 @@ const Files = () => {
 	const [textSearch, setTextSearch] = useState("");
 	const [numberOfData, setNumberOfData] = useState(-1);
 	const userPermissionId = 1
-	const [stateFile, setStateFile] = useState(false)
-	const getFileName = async (items) => {
+
+	const getFileName = async (items, search) => {
 		const searchedFileWithFileName = []
 		try {
 			for (const item of items) {
@@ -35,37 +37,25 @@ const Files = () => {
 		}
 		setSearchedFile(searchedFileWithFileName)
 		setNumberOfData(searchedFileWithFileName.length);
+		setTextSearch(search)
+		setSearching(false);
 	}
 
-	const handleSearch = (e) => {
-		const query = refInput.current.value;
-
+	const handleSearch = (search) => {
 		const fetchData = () => {
 			setSearching(true);
+			navigate("/van-ban?search=" + searchTerm)
 			setTimeout(async () => {
 				const response = await axiosHttpService.post(API_SEARCH, {
-					query: query,
+					query: search,
 				});
-
-				setTextSearch(query)
 				setCompleteGetAPI(true);
-				setSearching(false);
 				setTimeout(() => {
-					getFileName(response.data.items)
-				}, 320);
-			}, 2000);
+					getFileName(response.data.items, search)
+				}, 100);
+			}, 1000);
 		};
-
-		if (e.key === "Enter" || e.type === "click")
-			fetchData();
-
-
-	};
-
-	const viewDoc = (idFile, idDoc) => {
-		setIdDoc(idDoc)
-		setGovFileId(idFile)
-		setStateDoc(true)
+		fetchData();
 	};
 
 	const viewFile = (idFile) => {
@@ -73,9 +63,24 @@ const Files = () => {
 		setGovFileId(idFile)
 	}
 
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter" || e.type === "click"){
+			handleSearch(searchTerm)
+		}
+	}
+	const handleChangeSearchTerm = (e) => {
+		setSearchTerm(e.target.value)
+	}
+
+	useEffect(() => {
+		if (searchTerm) {
+			handleSearch(searchTerm)
+		}
+	}, [])
+
 	return (
 		<Fragment>
-			<div className="bg-white h-[80vh] relative">
+			<div className="bg-white h-[100vh] relative">
 				<div
 					className={`w-full flex justify-center flex-col items-center absolute transition-all top-[150px] duration-300 ${completeGetAPI === true ? "search-bar-after-search" : ""
 						}`}
@@ -88,7 +93,7 @@ const Files = () => {
 							<Spin />
 						) : (
 							<FaSearch
-								className="w-[21px] h-[25.2px] "
+								className="w-[21px] h-[25.2px]"
 								id="search-icon"
 								onClick={handleSearch}
 							/>
@@ -96,14 +101,16 @@ const Files = () => {
 						<input
 							ref={refInput}
 							placeholder="Nhập nội dung cần tìm kiếm..."
-							onKeyDown={handleSearch}
+							onChange={handleChangeSearchTerm}
+							onKeyDown={handleKeyDown}
 							disabled={searching}
+							className="ml-[6px]"
 						/>
 					</div>
 				</div>
+
 				<div>
 					<div className="pt-[110px] px-[10%]">
-
 						{numberOfData > -1 &&
 							<div className="text-center pb-[20px]">
 								Tổng số văn bản tìm kiếm được: {numberOfData}
@@ -116,13 +123,12 @@ const Files = () => {
 									<div className="border-[2px] border-solid p-[8px] rounded-[5px] mb-[16px]">
 										<div className="flex justify-left items-center text-[20px]">
 											<span
-												onClick={() => viewFile(file.gov_file_id)}
 												className="cursor-pointer text-[rgba(0,0,0,.45)]"
 											>
 												{file.file_name}
 											</span>
 											&nbsp;/ &nbsp;
-											<span className="cursor-pointer" onClick={() => { viewDoc(file.gov_file_id, file.doc_id) }}>{file.doc_name}</span>
+											<span className="cursor-pointer">{file.doc_name}</span>
 										</div>
 										<div className="font-bold">
 											{textSearch}
