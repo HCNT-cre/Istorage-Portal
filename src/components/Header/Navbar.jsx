@@ -14,10 +14,9 @@ const Navbar = () => {
     };
 
     const MENU = [
-        { title: 'Profile', link: '/profile', onClick: handleClick },
-        { title: 'Profile', link: '/profile', onClick: handleClick },
-        { title: 'Profile', link: '/profile', onClick: handleClick },
-        { title: 'Profile', link: '/profile', onClick: handleClick },
+        { title: 'Tất cả hồ sơ', link: '/', onClick: handleClick },
+        { title: 'Hồ sơ mới', link: '/', onClick: handleClick },
+        { title: 'Cơ quan ban hành', link: '/', onClick: handleClick },
     ]
     return (
         <div className='flex justify-around'>
