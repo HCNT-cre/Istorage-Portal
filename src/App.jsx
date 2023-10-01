@@ -21,7 +21,7 @@ const App = () => {
 					<Route path="/ho-so" element={<Layout
 						children={<FileSearch />}
 					/>} />
-					<Route path="/van-ban/:id" element={<Layout
+					<Route path="/van-ban/:idFile/:id" element={<Layout
 						children={<DocumentMetaData />}
 					/>} />
 					<Route path="/ho-so/:id" element={<Layout
