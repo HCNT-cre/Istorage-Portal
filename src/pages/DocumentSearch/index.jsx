@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const API_SEARCH = import.meta.env.VITE_API_SEARCH;
 const API_GOV_FILE_GET = import.meta.env.VITE_API_GOV_FILE_GET
 
-const Files = () => {
+const DocumentSearch = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const searchQuery = new URLSearchParams(location.search).get('search');
@@ -145,4 +145,4 @@ const Files = () => {
 	);
 };
 
-export default Files;
+export default DocumentSearch;
