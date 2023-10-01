@@ -1,4 +1,4 @@
-export const FIELDS_TABLE = [
+export const FIELDS_TABLE_SEARCH_FILE = [
     { title: "Mã hồ sơ", key: "gov_file_code", width: "150%" },
     { title: "Tiêu đề hồ sơ", key: "title", width: "100%" },
     { title: "Phông", key: "organ_id", width: "100%" },
@@ -8,10 +8,16 @@ export const FIELDS_TABLE = [
     { title: "Thời gian kết thúc", key: "end_date", width: "100%" },
     { title: "Thời hạn bảo quản", key: "maintenance", width: "100%" },
     { title: "Chế độ sử dụng", key: "rights", width: "100%" },
-    { title: "Trạng thái", key: "state", width: "130%" },
-    { title: "Chức năng", key: "Function", width: "120px" },
+    { title: "", key: "borrow", width: "100px" },
 ]
 
+export const FIELDS_TABLE_FILE_DETAIL = [
+    { title: "Mã hồ sơ", key: "gov_file_code" },
+    { title: "Tiêu đề hồ sơ", key: "title" },
+    { title: "Phông", key: "organ_id" },
+    { title: "Thời gian bắt đầu", key: "start_date" },
+    { title: "Thời gian kết thúc", key: "end_date" }
+]
 export const IDENTIFIER_CODE = {
     "Trung tâm Lưu trữ lịch sử": "001.03.34.H48",
     "Sở Giáo dục và Đào tạo": "001.03.34.J09",
@@ -20,14 +26,14 @@ export const IDENTIFIER_CODE = {
 }
 
 export const IDENTIFIER = [
-    { label: "Trung tâm Lưu trữ lịch sử" , value: "Trung tâm Lưu trữ lịch sử"},
+    { label: "Trung tâm Lưu trữ lịch sử", value: "Trung tâm Lưu trữ lịch sử" },
     { label: "Sở Giáo dục và Đào tạo", value: "Sở Giáo dục và Đào tạo" },
     { label: "Sở Thông tin và Truyền thông", value: "Sở Thông tin và Truyền thông" },
     { label: "UBND tỉnh Quảng Ngãi", value: "UBND tỉnh Quảng Ngãi" },
 ]
 
 export const ORGAN_ID = [
-    { label: "Phông trung tâm Lưu trữ lịch sử" , value: "Phông trung tâm Lưu trữ lịch sử"},
+    { label: "Phông trung tâm Lưu trữ lịch sử", value: "Phông trung tâm Lưu trữ lịch sử" },
     { label: "Phông sở Thông tin và Truyền thông", value: "Phông sở Thông tin và Truyền thông" },
     { label: "Phông sở Giáo dục và Đào tạo", value: "Phông sở Giáo dục và Đào tạo" },
 ]
