@@ -58,9 +58,8 @@ const DocumentSearch = () => {
 		fetchData();
 	};
 
-	const viewFile = (idFile) => {
-		setStateFile(true)
-		setGovFileId(idFile)
+	const viewDocument = (idFile, idDoc) => {
+		navigate("/van-ban/" + idFile + "/" + idDoc)
 	}
 
 	const handleKeyDown = (e) => {
@@ -121,15 +120,24 @@ const DocumentSearch = () => {
 							searchedFile.map((file, index) => {
 								return (
 									<div className="border-[2px] border-solid p-[8px] rounded-[5px] mb-[16px]">
-										<div className="flex justify-left items-center text-[20px]">
-											<span
-												className="cursor-pointer text-[rgba(0,0,0,.45)]"
-											>
-												{file.file_name}
-											</span>
-											&nbsp;/ &nbsp;
-											<span className="cursor-pointer">{file.doc_name}</span>
+										<div className="flex justify-between items-center">
+											<div className="flex justify-left items-center text-[20px]">
+												<span
+													className="text-[rgba(0,0,0,.45)]"
+												>
+													{file.file_name}
+												</span>
+												&nbsp;/ &nbsp;
+												<span
+													className="cursor-pointer "
+													onClick={() => viewDocument(file.gov_file_id, file.doc_id)}
+												>{file.doc_name}</span>
+											</div>
+											<p className="italic underline text-blue-500">
+												Mượn
+											</p>
 										</div>
+
 										<div className="font-bold">
 											{textSearch}
 										</div>
