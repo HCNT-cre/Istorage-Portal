@@ -2,7 +2,11 @@
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
-import Files from "./pages/Files";
+import DocumentSearch from "./pages/DocumentSearch";
+import FileSearch from "./pages/FileSearch";
+import DocumentMetaData from "./pages/DocumentMetaData";
+import FileMetaData from "./pages/FileMetaData";
+
 const App = () => {
 	return (
 		<div>
@@ -12,7 +16,16 @@ const App = () => {
 						children={<Home />}
 					/>} />
 					<Route path="/van-ban" element={<Layout
-						children={<Files />}
+						children={<DocumentSearch />}
+					/>} />
+					<Route path="/ho-so" element={<Layout
+						children={<FileSearch />}
+					/>} />
+					<Route path="/van-ban/:id" element={<Layout
+						children={<DocumentMetaData />}
+					/>} />
+					<Route path="/ho-so/:id" element={<Layout
+						children={<FileMetaData />}
 					/>} />
 				</Routes>
 			</BrowserRouter>
