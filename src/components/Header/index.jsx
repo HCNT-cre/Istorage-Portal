@@ -39,7 +39,10 @@ const Bar = () => {
 }
 const Header = () => {
     return (
-        <AppBar>
+        <AppBar sx={{
+            position: "fixed",
+            backgroundColor: "transparent",
+        }}>
             <Bar />
             <Navbar />
         </AppBar>

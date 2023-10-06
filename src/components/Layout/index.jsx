@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
     return (
         <div>
             <Header />
-            <div className="mt-[98px]">
+            <div>
                 {children}
             </div>
         </div>
