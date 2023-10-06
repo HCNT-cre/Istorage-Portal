@@ -3,7 +3,7 @@ import Title from "./Title"
 import { Container } from "@mui/material"
 const Home = () => {
     return (
-        <div className="h-[calc(100vh-98px)] bg-slate-500 overflow-hidden  bg-[url('src/assets/images/background_opacity.jpg')] bg-cover bg-center bg-no-repeat">
+        <div className="h-[calc(100vh-98px)] bg-slate-500 overflow-hidden  bg-[url('src/assets/images/background-blue.jpeg')] bg-cover bg-center bg-no-repeat">
             <Container maxWidth="md" sx={{
                 mt:20
             }}>
