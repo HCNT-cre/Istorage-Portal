@@ -19,7 +19,7 @@ const Navbar = () => {
         { title: 'Cơ quan ban hành', link: '/', onClick: handleClick },
     ]
     return (
-        <div className='flex justify-around'>
+        <div className='flex justify-around pb-4'>
             {
                 MENU.map((item, index) => {
                     return (
@@ -39,12 +39,12 @@ const Navbar = () => {
                                 anchorEl={anchorEl}
                                 open={open}
                                 onClose={handleClose}
-                                
+
                                 transformOrigin={{
                                     vertical: 'top',
                                     horizontal: 'left',
                                 }}
-                            >   
+                            >
                             </Menu>
                         </div>
                     )
