@@ -2,12 +2,15 @@ import { AppBar, IconButton, Toolbar, Stack, Button, Typography } from "@mui/mat
 import Navbar from "./Navbar"
 import QuocHuy from "src/assets/images/QuocHuy.png"
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { HEADER_FIXED } from "src/service/key"
 
 const Bar = () => {
     const navigate = useNavigate()
     const handleClickLogo = () => {
         navigate("/")
     }
+
     return (
         <Toolbar
             sx={{
@@ -16,7 +19,7 @@ const Bar = () => {
                 alignItems: "center",
             }}
         >
-            <div className="flex justify-left items-center" 
+            <div className="flex justify-left items-center"
                 onClick={handleClickLogo}
             >
                 <IconButton size="large" aria-label="logo">
@@ -38,11 +41,15 @@ const Bar = () => {
     )
 }
 const Header = () => {
+    const headerState = useSelector(state => state.header)
+
+    const sx = headerState === HEADER_FIXED ? {
+        position: "fixed",
+        backgroundColor: "transparent",
+    } : null
+    
     return (
-        <AppBar sx={{
-            position: "fixed",
-            backgroundColor: "transparent",
-        }}>
+        <AppBar sx={sx}>
             <Bar />
             <Navbar />
         </AppBar>

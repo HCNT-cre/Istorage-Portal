@@ -6,12 +6,13 @@ import { Button, Input } from "antd";
 import { FIELDS_TABLE_SEARCH_FILE } from "src/storage/FileStorage";
 import { useNavigate, useLocation } from "react-router-dom";
 import FileAPIService from "src/service/api/FileAPIService";
-
-
+import { setHeaderUnfixed } from "src/service/actions/headerAction";
+import { useDispatch } from "react-redux";
 
 const FileSearch = ({
     showTable = true
 }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const searchQuery = new URLSearchParams(location.search).get('search');
@@ -20,6 +21,7 @@ const FileSearch = ({
     const [stateCheckBox, setStateCheckBox] = useState([]);
     const [search, setSearch] = useState({});
 
+    dispatch(setHeaderUnfixed());
     const handleClickViewFile = (id) => {
         navigate(`/ho-so/${id}`);
     }
@@ -37,7 +39,7 @@ const FileSearch = ({
                     );
                 }
                 else row[key] = (
-                    <p  className="cursor-pointer" onClick={() => handleClickViewFile(rawData.id)}>
+                    <p className="cursor-pointer" onClick={() => handleClickViewFile(rawData.id)}>
                         {rawData[key] || ""}
                     </p>
                 );

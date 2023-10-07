@@ -4,7 +4,8 @@ import { FaSearch } from "react-icons/fa";
 import "./searchbar.css";
 import axiosHttpService from "src/utils/httpService";
 import { useLocation, useNavigate } from "react-router-dom";
-;
+import { useDispatch } from "react-redux";
+import { setHeaderUnfixed } from "src/service/actions/headerAction";
 
 const API_SEARCH = import.meta.env.VITE_API_SEARCH;
 const API_GOV_FILE_GET = import.meta.env.VITE_API_GOV_FILE_GET
@@ -21,6 +22,8 @@ const DocumentSearch = () => {
 	const [textSearch, setTextSearch] = useState("");
 	const [numberOfData, setNumberOfData] = useState(-1);
 	const userPermissionId = 1
+	const dispatch = useDispatch();
+    dispatch(setHeaderUnfixed());
 
 	const getFileName = async (items, search) => {
 		const searchedFileWithFileName = []

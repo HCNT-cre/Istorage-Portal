@@ -3,8 +3,13 @@ import { useParams } from "react-router-dom"
 import FileAPIService from "src/service/api/FileAPIService";
 import TableDetail from "src/components/TableDetail";
 import { FIELDS_TABLE_FILE_DETAIL } from "src/storage/FileStorage";
+import { useDispatch } from "react-redux";
+import { setHeaderUnfixed } from "src/service/actions/headerAction";
 const FileMetaData = () => {
+    const dispatch = useDispatch();
     const params = useParams();
+    dispatch(setHeaderUnfixed());
+
     const { id } = params;
     const [file, setFile] = useState({});
     const fieldData = []
