@@ -1,16 +1,25 @@
-import { Container, Table, TableHead, TableRow, TableCell } from "@mui/material"
+import { Container, Table, TableHead, TableRow, TableCell, Button } from "@mui/material"
 
 const TableDetail = ({
     headText,
-    data
+    data,
+    handleBorrow
 }) => {
+
     return (
         <Container maxWidth="md" sx={{
             mt: 20
         }}>
-            <Table>
-                <TableHead>
-                    {headText}
+            <Table sx={{
+                width: '100%',
+            }}>
+                <TableHead sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    width: '100%',
+                }}>
+                    <p>{headText}</p>
+                    <Button onClick={handleBorrow}>Mượn</Button>
                 </TableHead>
                 {
                     data.map((item, index) => {
