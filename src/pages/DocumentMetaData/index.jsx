@@ -5,6 +5,8 @@ import DocumentAPIService from "src/service/api/DocumentAPIService";
 import { FIELDS_TABLE_DOCUMENT_DETAIL } from "src/storage/DocumentStorage";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
 import { useDispatch } from "react-redux";
+import { addDocToCart } from "src/service/actions/cartAction";
+import { notifySuccess } from "src/utils/function";
 const DocumentMetaData = () => {
     const params = useParams();
     const {idFile, id} = params;
@@ -25,10 +27,15 @@ const DocumentMetaData = () => {
         getDocById();
     }, [idFile, id])
 
+    const handleClickAddDocToCart = () => {
+        dispatch(addDocToCart(idFile, id))
+        notifySuccess("Thêm văn bản vào giỏ hàng thành công")
+    }
     return (
         <TableDetail
             headText={"Thông tin văn bản"}
             data={fieldData}
+            handleBorrow={handleClickAddDocToCart}
         />
     )
 }

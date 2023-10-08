@@ -5,6 +5,8 @@ import TableDetail from "src/components/TableDetail";
 import { FIELDS_TABLE_FILE_DETAIL } from "src/storage/FileStorage";
 import { useDispatch } from "react-redux";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
+import { addFileToCart } from "src/service/actions/cartAction";
+import { notifySuccess } from "src/utils/function";
 const FileMetaData = () => {
     const dispatch = useDispatch();
     const params = useParams();
@@ -27,10 +29,16 @@ const FileMetaData = () => {
         getFile();
     }, [id])
 
+    const handleClickAddFileToCart = () => {
+        dispatch(addFileToCart(file))
+        notifySuccess("Thêm hồ sơ vào giỏ hàng thành công!")
+    }
+
     return (
         <TableDetail
             headText={"Thông tin văn bản"}
             data={fieldData}
+            handleBorrow={handleClickAddFileToCart}
         />
 
     )
