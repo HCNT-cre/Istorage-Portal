@@ -6,6 +6,7 @@ import axiosHttpService from "src/utils/httpService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
+import { addDocToCart } from "src/service/actions/cartAction";
 
 const API_SEARCH = import.meta.env.VITE_API_SEARCH;
 const API_GOV_FILE_GET = import.meta.env.VITE_API_GOV_FILE_GET
@@ -80,6 +81,10 @@ const DocumentSearch = () => {
 		}
 	}, [])
 
+	const handleClickAddDocToCart = (idFile, idDoc) => {
+		dispatch(addDocToCart(idFile, idDoc))
+	}
+
 	return (
 		<Fragment>
 			<div className="bg-white h-[100vh] relative">
@@ -136,7 +141,7 @@ const DocumentSearch = () => {
 													onClick={() => viewDocument(file.gov_file_id, file.doc_id)}
 												>{file.doc_name}</span>
 											</div>
-											<p className="italic underline text-blue-500">
+											<p className="italic underline text-blue-500 cursor-pointer" onClick={() => handleClickAddDocToCart(file.gov_file_id, file.doc_id)}>
 												Mượn
 											</p>
 										</div>
