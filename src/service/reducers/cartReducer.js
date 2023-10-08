@@ -12,8 +12,8 @@ const cartReducer = (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
         case ADD_FILE_TO_CART: {
-            const { id } = file
-            const existingFileIndex = state.cart.findIndex(file => file.id === id);
+            const { id: idFile } = file
+            const existingFileIndex = state.cart.findIndex(file => file.id === idFile);
             if (existingFileIndex !== -1) {
                 return update(state, {
                     cart: {
@@ -25,16 +25,19 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             } else {
                 return {
                     ...state,
-                    cart: [...state.cart, { id, data: file, docs: doc }]
+                    cart: [...state.cart, { id: idFile, data: file, docs: doc }]
                 };
             }
         }
 
         case ADD_DOC_TO_CART: {
-            const { id } = file
-            const existingFileIndex = state.cart.findIndex(file => file.id === id);
+            const { id: idFile } = file
+            const { id: idDoc } = doc
+
+            console.log(id, idDoc)
+            const existingFileIndex = state.cart.findIndex(file => file.id === idFile);
             if (existingFileIndex !== -1) {
-                const existingDocIndex = state.cart[existingFileIndex].docs.findIndex(id => id === doc.id);
+                const existingDocIndex = state.cart[existingFileIndex].docs.findIndex(doc => doc.id === idDoc);
                 if (existingDocIndex !== -1) {
                     return state;
                 }
@@ -49,28 +52,28 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             else {
                 return {
                     ...state,
-                    cart: [...state.cart, { id, data: file, docs: [doc] }]
+                    cart: [...state.cart, { id: idFile, data: file, docs: [doc] }]
                 };
             }
         }
 
         case REMOVE_DOC_FROM_CART: {
-            const { id } = file
-            const { idDoc } = doc
+            const { id: idFile } = file
+            const { id: idDoc } = doc
             return update(state, {
                 cart: {
-                    [state.cart.findIndex(file => file.id === id)]: {
-                        docs: { $splice: [[state.cart[state.cart.findIndex(file => file.id === id)].docs.findIndex(doc => doc.id === idDoc), 1]] }
+                    [state.cart.findIndex(file => file.id === idFile)]: {
+                        docs: { $splice: [[state.cart[state.cart.findIndex(file => file.id === idFile)].docs.findIndex(doc => doc.id === idDoc), 1]] }
                     }
                 }
             })
         }
 
         case REMOVE_FILE_FROM_CART: {
-            const { id } = file
+            const { id: idFile } = file
             return {
                 ...state,
-                cart: state.cart.filter(file => file.id !== id)
+                cart: state.cart.filter(file => file.id !== idFile)
             }
         }
 
