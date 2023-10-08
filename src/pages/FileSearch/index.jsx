@@ -2,14 +2,15 @@
 import { useEffect, useState } from "react";
 import { Table } from "src/components/Table";
 import "react-toastify/dist/ReactToastify.css";
-import { Button, Input } from "antd";
 import { FIELDS_TABLE_SEARCH_FILE } from "src/storage/FileStorage";
 import { useNavigate, useLocation } from "react-router-dom";
 import FileAPIService from "src/service/api/FileAPIService";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
 import { useDispatch } from "react-redux";
 import { addFileToCart } from "src/service/actions/cartAction";
-
+import { Input } from "antd";
+import { Button } from "@mui/material";
+import { notifySuccess } from "src/utils/function";
 const FileSearch = ({
     showTable = true
 }) => {
@@ -26,10 +27,12 @@ const FileSearch = ({
     const handleClickViewFile = (id) => {
         navigate(`/ho-so/${id}`);
     }
-    
-    const handleAddFileToCart = (id) => {
-        dispatch(addFileToCart(id));
+
+    const handleAddFileToCart = (file) => {
+        notifySuccess("Thêm hồ sơ vào giỏ hàng thành công!")
+        dispatch(addFileToCart(file));
     }
+    
     const getFileFromResponse = (response) => {
         let filesArray = [];
         for (const rawData of response) {
@@ -39,7 +42,7 @@ const FileSearch = ({
                 const { key } = field;
                 if (key === "borrow") {
                     row.borrow = (
-                        <p className="cursor-pointer text-blue-500 italic underline" onClick={() => handleAddFileToCart(rawData.id)}>Mượn</p>
+                        <Button className="cursor-pointer text-blue-500 italic underline" onClick={() => handleAddFileToCart(rawData)}>Mượn</Button>
                     );
                 }
                 else row[key] = (

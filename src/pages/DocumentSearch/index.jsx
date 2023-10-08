@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
 import { addDocToCart } from "src/service/actions/cartAction";
+import { Button } from "@mui/material";
+import { notifySuccess } from "src/utils/function";
 
 const API_SEARCH = import.meta.env.VITE_API_SEARCH;
 const API_GOV_FILE_GET = import.meta.env.VITE_API_GOV_FILE_GET
@@ -71,6 +73,7 @@ const DocumentSearch = () => {
 			handleSearch(searchTerm)
 		}
 	}
+
 	const handleChangeSearchTerm = (e) => {
 		setSearchTerm(e.target.value)
 	}
@@ -83,6 +86,7 @@ const DocumentSearch = () => {
 
 	const handleClickAddDocToCart = (idFile, idDoc) => {
 		dispatch(addDocToCart(idFile, idDoc))
+		notifySuccess("Thêm văn bản vào giỏ hàng thành công")
 	}
 
 	return (
@@ -141,9 +145,9 @@ const DocumentSearch = () => {
 													onClick={() => viewDocument(file.gov_file_id, file.doc_id)}
 												>{file.doc_name}</span>
 											</div>
-											<p className="italic underline text-blue-500 cursor-pointer" onClick={() => handleClickAddDocToCart(file.gov_file_id, file.doc_id)}>
+											<Button className="italic underline text-blue-500 cursor-pointer" onClick={() => handleClickAddDocToCart(file.gov_file_id, file.doc_id)}>
 												Mượn
-											</p>
+											</Button>
 										</div>
 
 										<div className="font-bold">
