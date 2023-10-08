@@ -8,39 +8,40 @@ const INITIAL_STATE = {
 
 const cartReducer = (state = INITIAL_STATE, action) => {
     const { payload = {} } = action;
-    const { idFile, idDoc } = payload;
+    const { file, doc } = payload;
 
     switch (action.type) {
         case ADD_FILE_TO_CART: {
-            const existingFileIndex = state.cart.findIndex(file => file.idFile === idFile);
+            const { id } = file
+            const existingFileIndex = state.cart.findIndex(file => file.id === id);
             if (existingFileIndex !== -1) {
                 return update(state, {
                     cart: {
                         [existingFileIndex]: {
-                            idDocs: { $set: idDoc }
+                            docs: { $set: doc },
                         }
                     }
-
                 })
-            }else {
+            } else {
                 return {
                     ...state,
-                    cart: [...state.cart, { idFile, idDocs: idDoc }]
+                    cart: [...state.cart, { id, data: file, docs: doc }]
                 };
             }
         }
 
         case ADD_DOC_TO_CART: {
-            const existingFileIndex = state.cart.findIndex(file => file.idFile === idFile);
+            const { id } = file
+            const existingFileIndex = state.cart.findIndex(file => file.id === id);
             if (existingFileIndex !== -1) {
-                const existingDocIndex = state.cart[existingFileIndex].idDocs.findIndex(id => id === idDoc);
+                const existingDocIndex = state.cart[existingFileIndex].docs.findIndex(id => id === doc.id);
                 if (existingDocIndex !== -1) {
                     return state;
                 }
                 return update(state, {
                     cart: {
                         [existingFileIndex]: {
-                            idDocs: { $push: [idDoc] }
+                            docs: { $push: [doc] }
                         }
                     }
                 });
@@ -48,25 +49,28 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             else {
                 return {
                     ...state,
-                    cart: [...state.cart, { idFile, idDocs: [idDoc] }]
+                    cart: [...state.cart, { file, docs: [doc] }]
                 };
             }
         }
-        
+
         case REMOVE_DOC_FROM_CART: {
+            const { id } = file
+            const { idDoc } = doc
             return update(state, {
                 cart: {
-                    [state.cart.findIndex(file => file.idFile === idFile)]: {
-                        idDocs: { $splice: [[state.cart[state.cart.findIndex(file => file.idFile === idFile)].idDocs.findIndex(doc => doc.idDoc === idDoc), 1]] }
+                    [state.cart.findIndex(file => file.id === id)]: {
+                        docs: { $splice: [[state.cart[state.cart.findIndex(file => file.id === id)].docs.findIndex(doc => doc.id === idDoc), 1]] }
                     }
                 }
             })
         }
 
         case REMOVE_FILE_FROM_CART: {
+            const { id } = file
             return {
                 ...state,
-                cart: state.cart.filter(file => file.idFile !== idFile)
+                cart: state.cart.filter(file => file.id !== id)
             }
         }
 

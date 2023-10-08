@@ -1,15 +1,14 @@
 import { ADD_DOC_TO_CART, ADD_FILE_TO_CART, REMOVE_DOC_FROM_CART, REMOVE_FILE_FROM_CART } from "../key"
 import DocumentAPIService from "../api/DocumentAPIService"
-export const addFileToCart = (idFile) => {
+export const addFileToCart = (file) => {
     return async (dispatch) => {
         try {
-            const docs = await DocumentAPIService.getAllDocumentByFileId(idFile);
-            const idDoc = docs.map(doc => doc.id);
+            const doc = await DocumentAPIService.getAllDocumentByFileId(file.id);
             dispatch({
                 type: ADD_FILE_TO_CART,
                 payload: {
-                    idFile,
-                    idDoc,
+                    file,
+                    doc,
                 },
             });
         } catch (error) {
@@ -19,7 +18,6 @@ export const addFileToCart = (idFile) => {
 };
 
 export const addDocToCart = (idFile, idDoc) => {
-    console.log(idFile, idDoc)
     return {
         type: ADD_DOC_TO_CART,
         payload: {
@@ -29,21 +27,21 @@ export const addDocToCart = (idFile, idDoc) => {
     }
 }
 
-export const removeFileFromCart = (idFile) => {
+export const removeFileFromCart = (file) => {
     return {
         type: REMOVE_FILE_FROM_CART,
         payload: {
-            idFile
+            file
         }
     }
 }
 
-export const removeDocFromCart = (idFile, idDoc) => {
+export const removeDocFromCart = (doc, file) => {
     return {
         type: REMOVE_DOC_FROM_CART,
         payload: {
-            idFile,
-            idDoc
+            doc,
+            file
         }
     }
 }
