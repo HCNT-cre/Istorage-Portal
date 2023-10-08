@@ -11,6 +11,8 @@ const CartPage = () => {
 
     const cart = useSelector((state) => state.cart.cart);
 
+    console.log(cart)
+    
     const handleRemoveFileFromCart = (file) => {
         dispatch(removeFileFromCart(file))
         notifySuccess('Xoá hồ sơ thành công!')

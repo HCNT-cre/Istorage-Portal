@@ -49,7 +49,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             else {
                 return {
                     ...state,
-                    cart: [...state.cart, { file, docs: [doc] }]
+                    cart: [...state.cart, { id, data: file, docs: [doc] }]
                 };
             }
         }
