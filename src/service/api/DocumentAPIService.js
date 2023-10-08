@@ -15,6 +15,11 @@ const DocumentAPIService = {
         const response = await axiosHttpService.get(`${API_DOCUMENT_GET}${idFile}`)
         const doc = response.data.filter((doc) => doc.id == idDoc);
         return doc[0] || [];
+    },
+
+    getAllDocumentByFileId: async (idFile) => {
+        const response = await axiosHttpService.get(`${API_DOCUMENT_GET}${idFile}`)
+        return response.data;
     }
 }
 
