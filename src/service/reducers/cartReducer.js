@@ -34,7 +34,6 @@ const cartReducer = (state = INITIAL_STATE, action) => {
             const { id: idFile } = file
             const { id: idDoc } = doc
 
-            console.log(id, idDoc)
             const existingFileIndex = state.cart.findIndex(file => file.id === idFile);
             if (existingFileIndex !== -1) {
                 const existingDocIndex = state.cart[existingFileIndex].docs.findIndex(doc => doc.id === idDoc);
