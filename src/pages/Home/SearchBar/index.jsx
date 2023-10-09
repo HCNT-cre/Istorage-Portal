@@ -14,7 +14,7 @@ const SearchBar = () => {
                 navigate("/van-ban?search=" + searchTerm)
                 break;
             case "title":
-                navigate("/ho-so?search=" + searchTerm)
+                navigate("/ho-so?title=" + searchTerm)
                 break;
             default:
                 break;

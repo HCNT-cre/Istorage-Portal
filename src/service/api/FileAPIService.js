@@ -15,15 +15,8 @@ const FileAPIService = {
         return response.data;
     },
 
-    searchFile: async (params) => {
-        let request = API_GOV_FILE_SEARCH + 1;
-        Object.keys(params).forEach((key) => {
-            if (key === "state" && (params[key] === 0 || params[key] === "Tất cả"))
-                return;
-            const value = params[key];
-            if ((value !== null) & (value !== ""))
-                request += "&" + key + "=" + value;
-        });
+    searchFile: async (query) => {        
+        let request = API_GOV_FILE_SEARCH + 1 + "&" + query;
         const response = await axiosHttpService.get(request);
         return response.data;
     },

@@ -8,16 +8,31 @@ import FileAPIService from "src/service/api/FileAPIService";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
 import { useDispatch } from "react-redux";
 import { addFileToCart } from "src/service/actions/cartAction";
-import { Input } from "antd";
+import { Input, Button as BtnAntd } from "antd";
 import { Button } from "@mui/material";
 import { notifySuccess } from "src/utils/function";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import SearchIcon from '@mui/icons-material/Search';
+
+const parseQuery = (params) => {
+    let request = "";
+    Object.keys(params).forEach((key) => {
+        if (key === "state" && (params[key] === 0 || params[key] === "Tất cả"))
+            return;
+        const value = params[key];
+        if ((value !== null) & (value !== ""))
+            request += "&" + key + "=" + value;
+    });
+    return request;
+}
+
 const FileSearch = ({
     showTable = true
 }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const searchQuery = new URLSearchParams(location.search).get('search');
+    const searchQuery = new URLSearchParams(location.search).toString();
     const [files, setFiles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [stateCheckBox, setStateCheckBox] = useState([]);
@@ -32,7 +47,7 @@ const FileSearch = ({
         notifySuccess("Thêm hồ sơ vào giỏ hàng thành công!")
         dispatch(addFileToCart(file));
     }
-    
+
     const getFileFromResponse = (response) => {
         let filesArray = [];
         for (const rawData of response) {
@@ -58,20 +73,20 @@ const FileSearch = ({
     };
 
     const resetSearch = async () => {
-        const response = await FileAPIService.getAllFile();
-        setFiles(getFileFromResponse(response));
         setSearch({});
+        navigate("/ho-so");
     };
 
     const handleSearch = async () => {
-        try {
-            setIsLoading(true);
-            const response = await FileAPIService.searchFile(search);
-            setIsLoading(false);
-            setFiles(getFileFromResponse(response));
-        } catch (error) {
-            console.error(error);
-        }
+        setIsLoading(true);
+        const response = await FileAPIService.searchFile(searchQuery);
+        setFiles(getFileFromResponse(response));
+        setIsLoading(false);
+    }
+
+    const handleClickSearch = async () => {
+        const query = parseQuery(search);
+        navigate(`/ho-so?${query}`);
     };
 
     const handleChangeSearch = (name, value) => {
@@ -82,25 +97,20 @@ const FileSearch = ({
     };
 
     useEffect(() => {
-        if (searchQuery) {
-            search["title"] = searchQuery;
-            handleSearch();
-            setSearch({ title: searchQuery });
-        }
-        setIsLoading(false);
-    }, [])
+        handleSearch()
+    }, [searchQuery])
 
     const BUTTON_ACTIONS = [
         {
             title: "Tìm kiếm",
             btn_class_name: "custom-btn-search",
-            icon: <i className="fa-solid fa-magnifying-glass"></i>,
-            onClick: handleSearch,
+            icon: <SearchIcon />,
+            onClick: handleClickSearch,
         },
         {
             title: "Xóa bộ lọc",
             btn_class_name: "custom-btn-clear-filter",
-            icon: <i className="fa-solid fa-sync"></i>,
+            icon: <RestartAltIcon />,
             onClick: resetSearch,
         }
     ];
@@ -179,13 +189,13 @@ const FileSearch = ({
                                         key={index}
                                         className="w-[11.11111%] text-white text-center px-[5px] rounded-[5px] flex"
                                     >
-                                        <Button
+                                        <BtnAntd
                                             onClick={item.onClick}
                                             className={`rounded-[5px] flex justify-center bg-[#00f] w-full px-[12px] py-[6px] text-[12px] text-white items-center ${item.btn_class_name}`}
                                         >
                                             <div className="mr-[8px]">{item.icon}</div>
                                             {item.title}
-                                        </Button>
+                                        </BtnAntd>
                                     </div>
                                 );
                             })}

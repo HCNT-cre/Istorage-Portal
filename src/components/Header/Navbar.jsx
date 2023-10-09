@@ -2,6 +2,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   menuItem: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const classes = useStyles(); // Initialize the styles
 
@@ -33,8 +35,11 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const handleClickAllFile = () => {
+    navigate('/ho-so');
+  }
   const MENU = [
-    { title: 'Tất cả hồ sơ', link: '/', onClick: handleClick },
+    { title: 'Tất cả hồ sơ', link: '/', onClick: handleClickAllFile },
     { title: 'Hồ sơ mới', link: '/', onClick: handleClick },
     { title: 'Cơ quan ban hành', link: '/', onClick: handleClick },
   ];
