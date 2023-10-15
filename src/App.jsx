@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
+
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
+import Files from "./pages/Files";
+import Login from "./pages/Login/login";
+import Register from "./pages/Login/register";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DocumentSearch from "./pages/DocumentSearch";
 import FileSearch from "./pages/FileSearch";
@@ -35,9 +41,21 @@ const App = () => {
 			/>
 			<BrowserRouter>
 				<Routes>
+
+					<Route path="/" element={<Layout
+						children={<Home />}
+					/>} />
+					<Route path="/van-ban" element={<Layout
+						children={<Files />}
+					/>} />
+					<Route path="/login" element={<Login />} /> 
+					<Route path="/register" element={<Register />} />
+
+
 					{routes.map((route, index) => (
 						<Route key={index} path={route.path} element={route.element} />
 					))}
+
 				</Routes>
 			</BrowserRouter>
 		</div>
