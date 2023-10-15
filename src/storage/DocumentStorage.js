@@ -28,3 +28,9 @@ export const FORM_FIELDS = [
     { key: "infor_sign", title: "Ký hiệu thông tin", require: false, type: "text" },
     { key: "keyword", title: "Từ khóa", require: false, type: "text" },
 ]
+
+export const FIELDS_TABLE_DOCUMENT_DETAIL = [
+    { title: "Mã văn bản", key: "code_number" },
+    { title: "Ngày, tháng, năm văn bàn", key: "issued_date" },
+    { title: "Bút tích", key: "infor_sign" },
+]

@@ -14,6 +14,7 @@ const SearchBar = () => {
                 navigate("/van-ban?search=" + searchTerm)
                 break;
             case "title":
+                navigate("/ho-so?title=" + searchTerm)
                 break;
             default:
                 break;
@@ -40,6 +41,7 @@ const SearchBar = () => {
                         background: `${currentSearchType === "title" ? "#1876d2" : "#ccc"}`,
                         color: "#fff",
                         borderRadius: "0px",
+                        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", 
                         "&:hover": {
                             background: "#000",
                             color: "#fff",
@@ -53,6 +55,7 @@ const SearchBar = () => {
                         background: `${currentSearchType === "content" ? "#1876d2" : "#ccc"}`,
                         color: "#fff",
                         borderRadius: "0px",
+                        boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", 
                         "&:hover": {
                             background: "#000",
                             color: "#fff",
@@ -71,7 +74,7 @@ const SearchBar = () => {
                 sx={{
                     width: 600,
                     marginTop: "10px",
-
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", // Add shadow
                 }}
                 InputProps={{
                     style: {
