@@ -1,5 +1,3 @@
-
-
 export const HEADER_FIXED = "HEADER_FIXED"
 export const HEADER_UNFIXED = "HEADER_UNFIXED"
 
@@ -11,3 +9,9 @@ export const ADD_DOC_TO_CART = "ADD_DOC_TO_CART"
 
 export const REMOVE_FILE_FROM_CART = "REMOVE_FILE_FROM_CART"
 export const REMOVE_DOC_FROM_CART = "REMOVE_DOC_FROM_CART"
+
+export const LOGIN = "LOGIN"
+export const LOGOUT = "LOGOUT"
+export const REGISTER = "REGISTER"
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD"
+

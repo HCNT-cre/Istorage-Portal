@@ -3,8 +3,10 @@ import { Container, Paper, Typography, TextField, Button, Link, IconButton } fro
 import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
+import { useDispatch } from "react-redux";
+import { Login as LoginAction} from "src/service/actions/userAction";
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,8 +30,8 @@ const Login = () => {
     const hardcodedPassword = "demo123";
 
     if (username === hardcodedUsername && password === hardcodedPassword) {
-  
       navigate("/");
+      dispatch(LoginAction())
     } else {
       setError("Tên đăng nhập hoặc mật khẩu không đúng!");
     }
