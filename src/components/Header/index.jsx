@@ -31,7 +31,7 @@ const Bar = () => {
   const handleClickCart = () => {
     navigate("/gio-hang");
   }
-  
+
   const cart = useSelector((state) => state.cart);
   let total = 0
   cart.cart.forEach((file) => total += file.docs.length)
@@ -61,6 +61,9 @@ const Bar = () => {
       </div>
 
       <Stack direction="row" spacing={2}>
+        <Button color="inherit" sx={buttonStyles}>
+          Trạng thái phiếu tin
+        </Button>
         <div className="relative">
           <Button color="inherit" sx={buttonStyles} onClick={handleClickCart}>
             Giỏ tài liệu

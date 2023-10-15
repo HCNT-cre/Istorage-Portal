@@ -5,13 +5,16 @@ import { setHeaderUnfixed } from 'src/service/actions/headerAction';
 import { removeDocFromCart, removeFileFromCart } from 'src/service/actions/cartAction';
 import { notifySuccess } from 'src/utils/function';
 import EmptyView from 'src/utils/view/emptyView';
+import ConfirmCart from 'src/components/Modal/ConfirmCart';
+import { useState } from 'react';
+import { Typography } from 'antd';
 const CartPage = () => {
     const dispatch = useDispatch();
+    const [openOrder, setOpenOrder] = useState({});
+    const [checked, setChecked] = useState({})
     dispatch(setHeaderUnfixed())
 
     const cart = useSelector((state) => state.cart.cart);
-
-    console.log(cart)
 
     const handleRemoveFileFromCart = (file) => {
         dispatch(removeFileFromCart(file))
@@ -24,79 +27,118 @@ const CartPage = () => {
         notifySuccess('Xoá văn bản thành công!')
     }
 
+    const handleOpenOrder = () => {
+        setOpenOrder(true)
+    }
+
+    console.log(cart)
+    console.log(checked)
+    const handleCheckParentBox = (id) => {
+        if (!checked[id]) {
+            checked[id] = []
+        }
+        const fileInCart = cart.find((file) => file.id === id)
+        if (checked[id].length === fileInCart.docs.length) {
+            setChecked({ ...checked, [id]: [] })
+        } else {
+            setChecked({ ...checked, [id]: fileInCart.docs.map((doc) => doc.id) })
+        }
+    }
+
+    const handleCheckChildBox = (id, docId) => {
+        const checkedDoc = checked[id]
+        if (checkedDoc.includes(docId)) {
+            setChecked({ ...checked, [id]: checkedDoc.filter((doc) => doc !== docId) })
+        } else {
+            setChecked({ ...checked, [id]: [...checkedDoc, docId] })
+        }
+    }
+
     return (
-        <Grid container
-            direction="column"
-            justifyContent="center"
-            alignItems="center">
-            <Grid item sx={{
-                width: '80%',
-                maxWidth: '800px !important',
-                padding: '10px',
-            }}>
-                {cart.length === 0 ? <EmptyView /> :
-                    <div>
-                        <List>
-                            {cart.map((cartItem) => (
-                                <ListItem sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'flex-start',
-                                    backgroundColor: '#ccc',
-                                    marginTop: '10px',
-                                    borderRadius: '10px',
-                                    boxShadow: '0 0 20px #ccc',
-                                    width: '100%',
-                                }}>
-                                    <div className='flex items-center justify-between w-full'>
-                                        <div className='flex items-center'>
-                                            <Checkbox />
-                                            <ListItemText primary={cartItem.data.title} />
+        <div>
+            <Grid container
+                direction="column"
+                justifyContent="center"
+                alignItems="center">
+                <Grid item sx={{
+                    width: '80%',
+                    maxWidth: '800px !important',
+                    padding: '10px',
+                }}>
+                    {cart.length === 0 ? <EmptyView /> :
+                        <div>
+                            <Typography.Title level={3} className='mt-[20px]'>Giỏ tài liệu</Typography.Title>
+                            <List>
+                                {cart.map((file) => (
+                                    <ListItem sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start',
+                                        backgroundColor: '#ccc',
+                                        marginTop: '10px',
+                                        borderRadius: '10px',
+                                        boxShadow: '0 0 20px #ccc',
+                                        width: '100%',
+                                    }}>
+                                        <div className='flex items-center justify-between w-full'>
+                                            <div className='flex items-center'>
+                                                <Checkbox
+                                                    checked={checked[file.id]?.length === file.docs.length}
+                                                    onClick={() => handleCheckParentBox(file.id)}
+                                                />
+                                                <ListItemText primary={file.data.title} />
+                                            </div>
+                                            <div>
+                                                <Button
+                                                    onClick={() => handleRemoveFileFromCart(file.data)}
+                                                    sx={{
+                                                        paddingLeft: '10px',
+                                                    }}>Xoá</Button>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <Button
-                                                onClick={() => handleRemoveFileFromCart(cartItem.data)}
-                                                sx={{
-                                                    paddingLeft: '10px',
-                                                }}>Xoá</Button>
-                                        </div>
-                                    </div>
-                                    {cartItem.docs.length === 0 ? <p className='ml-[10%] text-[14px]'> Không có văn bản</p> :
-                                        <List sx={{
-                                            width: '100%',
-                                            marginLeft: '10px',
-                                        }}>
-                                            {cartItem.docs.map((doc) => (
-                                                <div className='flex items-center justify-between w-full'>
-                                                    <div className='flex items-center'>
-                                                        <Checkbox />
-                                                        <ListItem key={doc.doc_name}>
-                                                            <ListItemText primary={doc.doc_name} />
-                                                        </ListItem>
+                                        {file.docs.length === 0 ? <p className='ml-[10%] text-[14px]'> Không có văn bản</p> :
+                                            <List sx={{
+                                                width: '100%',
+                                                marginLeft: '10px',
+                                            }}>
+                                                {file.docs.map((doc) => (
+                                                    <div className='flex items-center justify-between w-full'>
+                                                        <div className='flex items-center'>
+                                                            <Checkbox
+                                                                checked={checked[file.id]?.includes(doc.id)}
+                                                                onClick={() => handleCheckChildBox(file.id, doc.id)} />
+                                                            <ListItem key={doc.doc_name}>
+                                                                <ListItemText primary={doc.doc_name} />
+                                                            </ListItem>
+                                                        </div>
+                                                        <div>
+                                                            <Button
+                                                                onClick={() => handleRemoveDocFromCart(doc, file.data)}
+                                                                sx={{
+                                                                    fontSize: '12px',
+                                                                }}>xoá</Button>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <Button
-                                                            onClick={() => handleRemoveDocFromCart(doc, cartItem.data)}
-                                                            sx={{
-                                                                fontSize: '12px',
-                                                            }}>xoá</Button>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </List>
-                                    }
-                                </ListItem>
-                            ))}
-                        </List>
-                        <div className='flex justify-end'>
-                            <Button>Tạo phiếu tin</Button>
+                                                ))}
+                                            </List>
+                                        }
+                                    </ListItem>
+                                ))}
+                            </List>
+                            <div className='flex justify-end'>
+                                <Button onClick={handleOpenOrder}>Tạo phiếu tin</Button>
+                            </div>
+
                         </div>
-
-                    </div>
-
-                }
+                    }
+                </Grid>
             </Grid>
-        </Grid>
+            <ConfirmCart
+                open={openOrder}
+                setOpen={setOpenOrder}
+            />
+        </div>
+
     );
 };
 
