@@ -18,6 +18,10 @@ import ModalChangePassword from "../Modal/ChangePassword";
 import ModalPasswordRecovery from "../Modal/PasswordRecovery";
 import { Logout } from "src/service/actions/userAction";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+
+const API_LOG_OUT = import.meta.env.VITE_API_PORTAL_LOGOUT
+
 const buttonStyles = {
 	"&:hover": {
 		backgroundColor: "grey",
@@ -58,10 +62,17 @@ const Bar = () => {
 	const handleClickPasswordRecovery = () => {
 		setModalOpenPasswordRecovery(true);
 	}
-	const handleClickLogout = () =>{
-		setOpenUser(false)
+	const handleClickLogout = () => {
+		setOpenUser(false);
+		axios.defaults.withCredentials = true;
+		axios.post(API_LOG_OUT, {},
+			{
+				withCredentials: true,
+			}
+		);
 		dispatch(Logout())
 		navigate("/login")
+
 	}
 
 	const user = useSelector((state) => state.user);
@@ -140,9 +151,9 @@ const Bar = () => {
 						</div>
 					)}
 				</div>
-			<ModalChangeInfo modalOpen={modalChangeInfo} setModalOpen={setModalOpenChangeInfo} />
-			<ModalChangePassword ModalChangePasswordOpen={modalChangePassword} setModalChangePasswordOpen={setModalOpenChangePassword} />
-			<ModalPasswordRecovery ModalPasswordRecoveryOpen={modalPasswordRecovery} setModalPasswordRecoveryOpen={setModalOpenPasswordRecovery} />
+				<ModalChangeInfo modalOpen={modalChangeInfo} setModalOpen={setModalOpenChangeInfo} />
+				<ModalChangePassword ModalChangePasswordOpen={modalChangePassword} setModalChangePasswordOpen={setModalOpenChangePassword} />
+				<ModalPasswordRecovery ModalPasswordRecoveryOpen={modalPasswordRecovery} setModalPasswordRecoveryOpen={setModalOpenPasswordRecovery} />
 			</Stack>
 		</Toolbar>
 	);

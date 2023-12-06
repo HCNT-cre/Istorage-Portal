@@ -37,7 +37,7 @@ const Register = () => {
       console.log(res);
       navigate("/login");
     }).catch((err) => {
-      setError(err);
+      setError('Đăng kí thất bại');
       console.log(err);
     })
   };
