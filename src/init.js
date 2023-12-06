@@ -1,8 +1,8 @@
-import { GetUserInfo } from "./pages/Home/helper";
+import UserAPIService from "./service/api/userAPIService";
 
 const InitApp = {
     initUserInfo: async () =>{
-        const userInfo = await GetUserInfo();
+        const userInfo = await UserAPIService.getUserInfo();
         return userInfo;
     }
 };

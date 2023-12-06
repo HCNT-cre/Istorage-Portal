@@ -35,7 +35,7 @@ const Login = () => {
       try {
         const userInfo = await UserAPIService.getUserInfo();
         if (userInfo) {
-          dispatch(LoginAction(userInfo.email, userInfo.username));
+          dispatch(LoginAction(userInfo.user.email, userInfo.user.username));
           navigate("/");
         }
       } catch (err) {

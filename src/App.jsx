@@ -32,15 +32,13 @@ const App = () => {
 		const userInfo = await InitApp.initUserInfo();
 		console.log(userInfo);
 		if (userInfo) {
-			dispatch(LoginAction(userInfo.email, userInfo.username));
+			dispatch(LoginAction(userInfo.user.email, userInfo.user.username));
 		}
 	}
 
 	useEffect(() => {
 		Init();
 	}, [])
-
-
 
 	return (
 		<div>
