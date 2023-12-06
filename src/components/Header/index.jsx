@@ -16,7 +16,7 @@ import { useState } from "react";
 import ModalChangeInfo from "../Modal/ChangeInfo";
 import ModalChangePassword from "../Modal/ChangePassword";
 import ModalPasswordRecovery from "../Modal/PasswordRecovery";
-import { Logout } from "src/service/actions/userAction";
+import { LogoutAction } from "src/service/actions/userAction";
 import { useDispatch } from "react-redux";
 import AuthenAPIService from "src/service/api/authenAPIService";
 
@@ -71,7 +71,8 @@ const Bar = () => {
 	const handleClickLogout = async () => {
 		setOpenUser(false);
 		await AuthenAPIService.logout();
-		dispatch(Logout());
+		dispatch(LogoutAction());
+		toggleContent();
 		navigate("/");
 	}
 

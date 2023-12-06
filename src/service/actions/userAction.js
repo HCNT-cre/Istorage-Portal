@@ -8,7 +8,7 @@ export const LoginAction = (mail, username) => {
     }
 }
 
-export const Logout = () => {
+export const LogoutAction = () => {
     return {
         type: 'LOGOUT',
     }

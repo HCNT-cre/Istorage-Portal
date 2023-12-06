@@ -20,7 +20,7 @@ const AuthenAPIService = {
 
     logout: async () => {
         try {
-            const response = await axiosHttpService.get(API_LOGOUT);
+            const response = await axiosHttpService.post(API_LOGOUT, {});
             return response.data;
         } catch (err) {
             console.log(err);

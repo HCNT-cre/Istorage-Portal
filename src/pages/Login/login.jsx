@@ -61,7 +61,7 @@ const Login = () => {
           </Typography>
           <form>
             <TextField
-              label="Tên đăng nhập hoặc email"
+              label="Email"
               fullWidth
               margin="normal"
               variant="outlined"
