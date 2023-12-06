@@ -15,3 +15,16 @@ export const notifySuccess = (message) => {
         theme: "light",
     });
 }
+
+export const setUserInfo = (user) => {
+    localStorage.setItem('userInfo', JSON.stringify(user));
+}
+export const getUserInfo = () => {
+    const userInfo = localStorage.getItem('userInfo');
+    console.log(!userInfo);
+    if (userInfo !== undefined && userInfo !== null) {
+        console.log("returned", userInfo);
+        return JSON.parse(userInfo); // Parse the userInfo from JSON string to object
+    }
+    return null;
+}

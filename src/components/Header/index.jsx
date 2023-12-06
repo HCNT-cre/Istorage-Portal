@@ -18,8 +18,8 @@ import ModalChangePassword from "../Modal/ChangePassword";
 import ModalPasswordRecovery from "../Modal/PasswordRecovery";
 import { Logout } from "src/service/actions/userAction";
 import { useDispatch } from "react-redux";
-import axios from "axios";
-
+import axiosHttpService from "src/utils/httpService";
+import { getUserInfo } from "src/utils/function";
 const API_LOG_OUT = import.meta.env.VITE_API_PORTAL_LOGOUT
 
 const buttonStyles = {
@@ -64,30 +64,25 @@ const Bar = () => {
 	}
 	const handleClickLogout = () => {
 		setOpenUser(false);
-		axios.defaults.withCredentials = true;
-		axios.post(API_LOG_OUT, {},
-			{
-				withCredentials: true,
-			}
-		);
-		dispatch(Logout())
-		navigate("/login")
-
+		axiosHttpService.post(API_LOG_OUT);
+		dispatch(Logout());
+		navigate("/login");
 	}
 
-	const user = useSelector((state) => state.user);
-	console.log(user);
+	const user = getUserInfo();
+	console.log(user.email)
 	const cart = useSelector((state) => state.cart);
 	let total = 0
 	cart.cart.forEach((file) => total += file.docs.length)
 
 	const handleClickUser = () => {
-		if (user.isLogin) {
+		if (user) {
 			// navigate("/nguoi-dung")
 		} else {
 			navigate("/login")
 		}
 	}
+
 	return (
 		<Toolbar
 			sx={{
@@ -130,10 +125,10 @@ const Bar = () => {
 					<Button
 						color="inherit"
 						sx={buttonStyles}
-						onClick={user.isLogin ? toggleContent : handleClickUser}
+						onClick={user ? toggleContent : handleClickUser}
 						ref={buttonRef}
 					>
-						{user.isLogin ? user.mail.split('@')[0] : "Đăng nhập"}
+						{ user ? user.email.split('@')[0] : "Đăng nhập"}
 					</Button>
 					{showContent && (
 						<div

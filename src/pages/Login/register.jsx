@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Paper, Typography, TextField, Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosHttpService from "src/utils/httpService";
 const API_REGISTER = import.meta.env.VITE_API_PORTAL_REGISTER
 
 const Register = () => {
@@ -29,7 +29,7 @@ const Register = () => {
   };
 
   const handleRegister = async () => {
-    axios.post(API_REGISTER, {
+    axiosHttpService.post(API_REGISTER, {
       email: email,
       username: username,
       password: password,

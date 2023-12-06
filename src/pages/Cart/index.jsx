@@ -31,8 +31,6 @@ const CartPage = () => {
         setOpenOrder(true)
     }
 
-    console.log(cart)
-    console.log(checked)
     const handleCheckParentBox = (id) => {
         if (!checked[id]) {
             checked[id] = []

@@ -3,14 +3,12 @@ import { Container, Paper, Typography, TextField, Button, Link, IconButton } fro
 import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useDispatch } from "react-redux";
-import { Login as LoginAction} from "src/service/actions/userAction";
-import axios from "axios";
-
+import { getUserInfo, setUserInfo } from "src/utils/function";
+import axiosHttpService from "src/utils/httpService";
+const API_USERINFO = import.meta.env.VITE_API_PORTAL_USERINFO
 const API_LOGIN = import.meta.env.VITE_API_PORTAL_LOGIN
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -30,14 +28,13 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const response = await axios.post(API_LOGIN, {
+    const response = await axiosHttpService.post(API_LOGIN, {
       email: username,
       password: password,
     });
-    console.log(response);
     if(response.status === 200){
+      setUserInfo(response.data);
       navigate("/");
-      dispatch(LoginAction(username))
     } else {
       setError("Tên đăng nhập hoặc mật khẩu không đúng!");
     }
