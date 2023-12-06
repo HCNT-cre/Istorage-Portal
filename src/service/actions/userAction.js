@@ -1,9 +1,9 @@
-export const Login = (mail, name) => {
+export const Login = (mail) => {
+    console.log(mail);
     return {
         type: 'LOGIN',
         payload: {
             mail,
-            name,
         },
     }
 }

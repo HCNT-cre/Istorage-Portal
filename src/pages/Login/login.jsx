@@ -5,6 +5,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useDispatch } from "react-redux";
 import { Login as LoginAction} from "src/service/actions/userAction";
+import axios from "axios";
+
+const API_LOGIN = import.meta.env.VITE_API_PORTAL_LOGIN
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,13 +29,15 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = () => {
-    const hardcodedUsername = "demo";
-    const hardcodedPassword = "demo123";
-
-    if (username === hardcodedUsername && password === hardcodedPassword) {
+  const handleLogin = async () => {
+    const response = await axios.post(API_LOGIN, {
+      email: username,
+      password: password,
+    });
+    console.log(response);
+    if(response.status === 200){
       navigate("/");
-      dispatch(LoginAction())
+      dispatch(LoginAction(username))
     } else {
       setError("Tên đăng nhập hoặc mật khẩu không đúng!");
     }

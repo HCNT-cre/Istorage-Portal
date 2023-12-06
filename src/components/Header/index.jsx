@@ -65,6 +65,7 @@ const Bar = () => {
 	}
 
 	const user = useSelector((state) => state.user);
+	console.log(user);
 	const cart = useSelector((state) => state.cart);
 	let total = 0
 	cart.cart.forEach((file) => total += file.docs.length)
@@ -121,7 +122,7 @@ const Bar = () => {
 						onClick={user.isLogin ? toggleContent : handleClickUser}
 						ref={buttonRef}
 					>
-						{user.isLogin ? "Nguyễn Văn A" : "Đăng nhập"}
+						{user.isLogin ? user.mail.split('@')[0] : "Đăng nhập"}
 					</Button>
 					{showContent && (
 						<div

@@ -6,11 +6,13 @@ const INITIAL_STATE = {
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
+    console.log(state);
     switch (action.type) {
         case LOGIN:
             return {
                 ...state,
                 isLogin: true,
+                mail: action.payload.mail,
             }
         case LOGOUT:
             return {
