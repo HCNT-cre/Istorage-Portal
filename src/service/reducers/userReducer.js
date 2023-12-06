@@ -12,6 +12,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 isLogin: true,
                 mail: action.payload.mail,
+                username: action.payload.username
             }
         case LOGOUT:
             return {

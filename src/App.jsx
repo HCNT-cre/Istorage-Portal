@@ -10,7 +10,10 @@ import DocumentMetaData from "./pages/DocumentMetaData";
 import FileMetaData from "./pages/FileMetaData";
 import CartPage from "./pages/Cart";
 import { ToastContainer, Zoom } from "react-toastify";
-
+import { useDispatch } from "react-redux";
+import InitApp from "./init";
+import { LoginAction } from "./service/actions/userAction";
+import { useEffect } from "react";
 const routes = [
 	{ path: "/", element: <Layout children={<Home />} /> },
 	{ path: "/van-ban", element: <Layout children={<DocumentSearch />} /> },
@@ -23,6 +26,22 @@ const routes = [
 ];
 
 const App = () => {
+	const dispatch = useDispatch();
+
+	const Init = async () => {
+		const userInfo = await InitApp.initUserInfo();
+		console.log(userInfo);
+		if (userInfo) {
+			dispatch(LoginAction(userInfo.email, userInfo.username));
+		}
+	}
+
+	useEffect(() => {
+		Init();
+	}, [])
+
+
+
 	return (
 		<div>
 			<ToastContainer

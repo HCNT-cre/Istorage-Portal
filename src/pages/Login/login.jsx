@@ -3,12 +3,14 @@ import { Container, Paper, Typography, TextField, Button, Link, IconButton } fro
 import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { getUserInfo, setUserInfo } from "src/utils/function";
-import axiosHttpService from "src/utils/httpService";
-const API_USERINFO = import.meta.env.VITE_API_PORTAL_USERINFO
-const API_LOGIN = import.meta.env.VITE_API_PORTAL_LOGIN
+import AuthenAPIService from "src/service/api/authenAPIService";
+import { useDispatch } from "react-redux";
+import { LoginAction } from "src/service/actions/userAction";
+import UserAPIService from "src/service/api/userAPIService";
+
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,15 +30,19 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const response = await axiosHttpService.post(API_LOGIN, {
-      email: username,
-      password: password,
-    });
-    if(response.status === 200){
-      setUserInfo(response.data);
-      navigate("/");
+    const response = await AuthenAPIService.login(username, password);
+    if (response) {
+      try {
+        const userInfo = await UserAPIService.getUserInfo();
+        if (userInfo) {
+          dispatch(LoginAction(userInfo.email, userInfo.username));
+          navigate("/");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } else {
-      setError("Tên đăng nhập hoặc mật khẩu không đúng!");
+      setError("Đăng nhập thất bại");
     }
   };
 
@@ -49,7 +55,7 @@ const Login = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <Container maxWidth="sm">
-        <Paper elevation={3} style={{ padding: "20px" , borderRadius:"10px", boxShadow:"0px 2px 10px grey"}}>
+        <Paper elevation={3} style={{ padding: "20px", borderRadius: "10px", boxShadow: "0px 2px 10px grey" }}>
           <Typography variant="h4" align="center">
             Đăng nhập
           </Typography>

@@ -18,9 +18,7 @@ import ModalChangePassword from "../Modal/ChangePassword";
 import ModalPasswordRecovery from "../Modal/PasswordRecovery";
 import { Logout } from "src/service/actions/userAction";
 import { useDispatch } from "react-redux";
-import axiosHttpService from "src/utils/httpService";
-import { getUserInfo } from "src/utils/function";
-const API_LOG_OUT = import.meta.env.VITE_API_PORTAL_LOGOUT
+import AuthenAPIService from "src/service/api/authenAPIService";
 
 const buttonStyles = {
 	"&:hover": {
@@ -34,49 +32,56 @@ const buttonStyles = {
 };
 
 const Bar = () => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	const [modalChangeInfo, setModalOpenChangeInfo] = useState(false);
 	const [modalChangePassword, setModalOpenChangePassword] = useState(false);
 	const [modalPasswordRecovery, setModalOpenPasswordRecovery] = useState(false);
-
 	const navigate = useNavigate();
+
 	const [openUser, setOpenUser] = useState(false);
+	const user = useSelector((state) => state.user);
+
+	console.log(user);
 	const handleClose = () => {
 		setOpenUser(false);
 	}
+
 	const [buttonRef, contentRef, toggleContent, showContent] =
 		useButtonClickOutside(false, handleClose);
 
 	const handleClickLogo = () => {
 		navigate("/");
 	};
+
 	const handleClickCart = () => {
 		navigate("/gio-hang");
 	}
 	const handleClickChangeInfo = () => {
 		setModalOpenChangeInfo(true);
 	}
+	
 	const handleClickChangePassword = () => {
 		setModalOpenChangePassword(true);
 	}
+
 	const handleClickPasswordRecovery = () => {
 		setModalOpenPasswordRecovery(true);
 	}
-	const handleClickLogout = () => {
+
+	const handleClickLogout = async () => {
 		setOpenUser(false);
-		axiosHttpService.post(API_LOG_OUT);
+		await AuthenAPIService.logout();
 		dispatch(Logout());
-		navigate("/login");
+		navigate("/");
 	}
 
-	const user = getUserInfo();
-	console.log(user.email)
 	const cart = useSelector((state) => state.cart);
+
 	let total = 0
 	cart.cart.forEach((file) => total += file.docs.length)
 
 	const handleClickUser = () => {
-		if (user) {
+		if (user.isLogin) {
 			// navigate("/nguoi-dung")
 		} else {
 			navigate("/login")
@@ -125,10 +130,10 @@ const Bar = () => {
 					<Button
 						color="inherit"
 						sx={buttonStyles}
-						onClick={user ? toggleContent : handleClickUser}
+						onClick={user.isLogin ? toggleContent : handleClickUser}
 						ref={buttonRef}
 					>
-						{ user ? user.email.split('@')[0] : "Đăng nhập"}
+						{user.isLogin ? user.username : "Đăng nhập"}
 					</Button>
 					{showContent && (
 						<div

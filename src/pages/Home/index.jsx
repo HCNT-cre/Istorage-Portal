@@ -3,22 +3,10 @@ import SearchBar from "./SearchBar"
 import Title from "./Title"
 import { Container } from "@mui/material"
 import { setHeaderFixed } from "src/service/actions/headerAction"
-import { useEffect } from "react"
-import axiosHttpService from "src/utils/httpService"
-
-const API_USERINFO = import.meta.env.VITE_API_PORTAL_USERINFO
 
 const Home = () => {
-    const dispatch = useDispatch()
-    dispatch(setHeaderFixed())
-    useEffect(() =>{
-        const getUserInfo = async () => {
-            const res = await axiosHttpService.get(API_USERINFO);
-            console.log(res);
-        }
-        getUserInfo();
-    }, [])
-    
+    const dispatch = useDispatch();
+    dispatch(setHeaderFixed());
     return (
         <div className="h-[100vh] bg-slate-500 overflow-hidden bg-[url('src/assets/images/background-blue.jpeg')] bg-cover bg-center bg-no-repeat">
             <Container maxWidth="md" sx={{
