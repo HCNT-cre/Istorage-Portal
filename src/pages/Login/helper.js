@@ -6,10 +6,10 @@ export const isPasswordValid = (password) => {
     if (!/\d/.test(password)) {
         return false;
     }
-
-    if (!/[!@#$%^:&*]/.test(password)) {
+    
+    if (!/[^a-zA-Z0-9]/.test(password)) {
         return false;
     }
+
     return true;
 }
-
