@@ -10,7 +10,9 @@ const axiosHttpService = axios.create({
     xsrfHeaderName: 'X-CSRFToken'
 })
 
-const axiosCrossDomainHttpService = axios.create({});
+const axiosCrossDomainHttpService = axios.create({
+    withCredentials: false
+});
 
 export {axiosHttpService};
 
