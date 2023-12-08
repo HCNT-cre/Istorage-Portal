@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Spin } from "antd";
 import { FaSearch } from "react-icons/fa";
 import "./searchbar.css";
-import axiosHttpService from "src/utils/httpService";
+import axiosCrossDomainHttpService from "src/utils/httpService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setHeaderUnfixed } from "src/service/actions/headerAction";
@@ -32,7 +32,7 @@ const DocumentSearch = () => {
 		const searchedFileWithFileName = []
 		try {
 			for (const item of items) {
-				const response = await axiosHttpService.get(API_GOV_FILE_GET + "id=" + item.gov_file_id + "&perm_token=" + userPermissionId)
+				const response = await axiosCrossDomainHttpService.get(API_GOV_FILE_GET + "id=" + item.gov_file_id + "&perm_token=" + userPermissionId)
 				searchedFileWithFileName.push({
 					...item,
 					file_name: response.data[0].title
@@ -52,7 +52,7 @@ const DocumentSearch = () => {
 			setSearching(true);
 			navigate("/van-ban?search=" + searchTerm)
 			setTimeout(async () => {
-				const response = await axiosHttpService.post(API_SEARCH, {
+				const response = await axiosCrossDomainHttpService.post(API_SEARCH, {
 					query: search,
 				});
 				setCompleteGetAPI(true);

@@ -1,4 +1,4 @@
-import axiosHttpService from "src/utils/httpService";
+import axiosCrossDomainHttpService, {axiosHttpService} from "src/utils/httpService";
 
 const API_USERINFO = import.meta.env.VITE_API_PORTAL_USERINFO
 

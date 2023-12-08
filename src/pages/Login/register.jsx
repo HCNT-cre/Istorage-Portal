@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Paper, Typography, TextField, Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axiosHttpService from "src/utils/httpService";
+import axiosCrossDomainHttpService, {axiosHttpService} from "src/utils/httpService";
 import { isPasswordValid } from './helper'
 const API_REGISTER = import.meta.env.VITE_API_PORTAL_REGISTER
 
