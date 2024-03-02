@@ -9,6 +9,7 @@ import FileSearch from "./pages/FileSearch";
 import DocumentMetaData from "./pages/DocumentMetaData";
 import FileMetaData from "./pages/FileMetaData";
 import CartPage from "./pages/Cart";
+import RequestState from "./pages/RequestState";
 import { ToastContainer, Zoom } from "react-toastify";
 import { useDispatch } from "react-redux";
 import InitApp from "./init";
@@ -21,6 +22,7 @@ const routes = [
 	{ path: "/van-ban/:idFile/:id", element: <Layout children={<DocumentMetaData />} /> },
 	{ path: "/ho-so/:id", element: <Layout children={<FileMetaData />} /> },
 	{ path: "/gio-hang", element: <Layout children={<CartPage />} /> },
+	{ path: "/trang-thai-phieu-tin", element: <Layout children={<RequestState />} /> },
 	{ path: "/login", element: <Login /> },
 	{ path: "/register", element: <Register /> },
 ];

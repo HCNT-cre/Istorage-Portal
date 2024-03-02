@@ -56,6 +56,11 @@ const Bar = () => {
 	const handleClickCart = () => {
 		navigate("/gio-hang");
 	}
+	
+	const handleClickRequestState = () => {
+		navigate("/trang-thai-phieu-tin");
+	}
+
 	const handleClickChangeInfo = () => {
 		setModalOpenChangeInfo(true);
 	}
@@ -114,7 +119,7 @@ const Bar = () => {
 			</div>
 
 			<Stack direction="row" spacing={2}>
-				<Button color="inherit" sx={buttonStyles}>
+				<Button color="inherit" sx={buttonStyles} onClick={handleClickRequestState}>
 					Trạng thái phiếu tin
 				</Button>
 				<div className="relative">

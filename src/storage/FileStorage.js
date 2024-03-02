@@ -11,6 +11,16 @@ export const FIELDS_TABLE_SEARCH_FILE = [
     { title: "", key: "borrow", width: "100px" },
 ]
 
+export const FIELDS_TABLE_REQUEST_STATE = [
+    { title: "Mã phiếu tin", key: "gov_file_code", width: "50%" },
+    { title: "Họ và tên", key: "user_name", width: "100%" },
+    { title: "Cơ quan", key: "organ", width: "100%" },
+    { title: "Số lượng văn bản", key: "TotalDoc", width: "150%" },
+    { title: "Trạng thái", key: "state", width: "100%" },
+]
+
+
+
 export const FIELDS_TABLE_FILE_DETAIL = [
     { title: "Mã hồ sơ", key: "gov_file_code" },
     { title: "Tiêu đề hồ sơ", key: "title" },
